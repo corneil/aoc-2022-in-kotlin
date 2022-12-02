@@ -22,11 +22,6 @@ object Rules {
         Rps.SCISSORS to Rule(Rps.PAPER, Rps.ROCK)
     )
 
-    fun wins(hand: Hand): Boolean {
-        val shape = beats[hand.me] ?: error("Cannot find ${hand.me}")
-        return shape.loser == hand.them
-    }
-
     fun winner(shape: Rps): Rps {
         val winner = beats[shape] ?: error("Cannot find $shape")
         return winner.winner
@@ -36,6 +31,12 @@ object Rules {
         val loser = beats[shape] ?: error("Cannot find $shape")
         return loser.loser
     }
+
+    fun didIWin(round: Hand): Boolean {
+        val shape = loser(round.me)
+        return shape == round.them
+    }
+
 }
 
 fun main() {
@@ -68,8 +69,9 @@ fun main() {
     fun readRounds2(input: List<String>): List<Hand> {
         return input.map {
             val hints = it.split(" ")
-            val shape = toRps(hints[0])
-            Hand(shape, chooseShape(shape, toOutcome(hints[1])))
+            Pair(toRps(hints[0]), toOutcome(hints[1]))
+        }.map {
+            Hand(it.first, chooseShape(it.first, it.second))
         }
     }
 
@@ -77,7 +79,7 @@ fun main() {
     fun calcRound(round: Hand): Int {
         if (round.them == round.me) return Outcome.DRAW.score
 
-        return if (Rules.wins(round)) Outcome.WIN.score else Outcome.LOSE.score
+        return if (Rules.didIWin(round)) Outcome.WIN.score else Outcome.LOSE.score
     }
 
     fun calcScore(round: Hand): Int {
@@ -98,7 +100,8 @@ fun main() {
         val input = readRounds(readInput("day02"))
         val total = calcTotal(input)
         println("Total = $total")
-
+        // answer for my data. check will be used during refactoring
+        check(total == 13446)
     }
 
     fun part2() {
@@ -111,6 +114,8 @@ fun main() {
         val input2 = readRounds2(readInput("day02"))
         val total2 = calcTotal(input2)
         println("Total 2 = $total2")
+        // answer for my data. check will be used during refactoring
+        check(total2 == 13509)
     }
 
     part1()
