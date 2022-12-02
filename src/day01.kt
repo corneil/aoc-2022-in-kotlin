@@ -1,6 +1,3 @@
-package io.github.corneil.aoc_2022_in_kotlin.day01
-import io.github.corneil.aoc_2022_in_kotlin.utils.readInput
-
 fun main() {
     fun findCalories(input: List<String>): List<Int> {
         val elves = mutableListOf<Int>()
@@ -27,7 +24,7 @@ fun main() {
         return calories.sortedDescending().take(3).sum()
     }
 
-    val testInput = readInput("day01_test1")
+    val testInput = readInput("day01_test")
     val testMax = findMaxCalories(testInput)
     println("Test Max Calories = $testMax")
     check(testMax == 24000)

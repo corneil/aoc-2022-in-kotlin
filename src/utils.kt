@@ -1,5 +1,3 @@
-package io.github.corneil.aoc_2022_in_kotlin.utils
-
 import java.io.File
 
 /**
