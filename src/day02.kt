@@ -75,11 +75,12 @@ fun main() {
         }
     }
 
-    // Test if draw or if second wins
     fun calcRound(round: Hand): Int {
-        if (round.them == round.me) return Outcome.DRAW.score
-
-        return if (Rules.didIWin(round)) Outcome.WIN.score else Outcome.LOSE.score
+        return when {
+            round.them == round.me -> Outcome.DRAW.score
+            Rules.didIWin(round) -> Outcome.WIN.score
+            else -> Outcome.LOSE.score
+        }
     }
 
     fun calcScore(round: Hand): Int {
