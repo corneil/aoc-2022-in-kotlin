@@ -13,10 +13,9 @@ fun main() {
       .sumOf { calcPriority(it) }
 
   fun calcBadges(input: List<String>): Int =
-    input.mapIndexed { index, s -> index / 3 to s }
-      .groupBy({ it.first }, { it.second })
-      .map { e ->
-        e.value
+    input.chunked(3)
+      .map { group ->
+        group
           .map { it.toSet() }
           .reduce { a, b -> a.intersect(b) }
           .first()
