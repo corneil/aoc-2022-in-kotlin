@@ -18,26 +18,29 @@ fun main() {
     return ranges.count { it.first.intersect(it.second).isNotEmpty() }
   }
 
+  val test = """2-4,6-8
+2-3,4-5
+5-7,7-9
+2-8,3-7
+6-6,4-6
+2-6,4-8"""
+
   fun part1() {
-    val testInput = readInput("day04_test")
-    val testCount = calcContains(convertRanges(testInput))
+    val testCount = calcContains(convertRanges(readText(test)))
     println("Part 1 Test Count = $testCount")
     check(testCount == 2)
 
-    val input = readInput("day04")
-    val count = calcContains(convertRanges(input))
+    val count = calcContains(convertRanges(readFile("day04")))
     println("Part 1 Count = $count")
     check(count == 524)
   }
 
   fun part2() {
-    val testInput = readInput("day04_test")
-    val testCount = calcOverlap(convertRanges(testInput))
+    val testCount = calcOverlap(convertRanges(readText(test)))
     println("Part 2 Test Count = $testCount")
     check(testCount == 4)
 
-    val input = readInput("day04")
-    val count = calcOverlap(convertRanges(input))
+    val count = calcOverlap(convertRanges(readFile("day04")))
     println("Part 2 Count = $count")
     check(count == 798)
   }

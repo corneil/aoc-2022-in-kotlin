@@ -22,23 +22,30 @@ fun main() {
       }
       .sumOf { calcPriority(it) }
 
+  val test = """vJrwpWtwJgWrhcsFMMfFFhFp
+jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL
+PmmdzqPrVvPwwTWBwg
+wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn
+ttgJtRGJQctTZtZT
+CrZsJsPPZsGzwwsLwLmpwMDw"""
+
   fun part1() {
-    val testPriorities = calcRucksacks(readInput("day03_test"))
+    val testPriorities = calcRucksacks(readText(test))
     println("Test Priorities = $testPriorities")
     check(testPriorities == 157)
 
-    val priorities = calcRucksacks(readInput("day03"))
+    val priorities = calcRucksacks(readFile("day03"))
     println("Priorities = $priorities")
     // added after success to ensure refactoring doesn't break
     check(priorities == 8123)
   }
 
   fun part2() {
-    val testPriorities = calcBadges(readInput("day03_test"))
+    val testPriorities = calcBadges(readText(test))
     println("Test Priorities = $testPriorities")
     check(testPriorities == 70)
 
-    val priorities = calcBadges(readInput("day03"))
+    val priorities = calcBadges(readFile("day03"))
     println("Priorities = $priorities")
     // added after success to ensure refactoring doesn't break
     check(priorities == 2620)

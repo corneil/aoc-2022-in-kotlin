@@ -90,15 +90,17 @@ fun main() {
   fun calcTotal(rounds: List<Hand>): Int {
     return rounds.sumOf { calcScore(it) }
   }
-
+  val test = """A Y
+B X
+C Z"""
   fun part1() {
 
-    val testInput = readRounds(readInput("day02_test"))
+    val testInput = readRounds(readText(test))
     val testScore = calcTotal(testInput)
     println("Test Total = $testScore")
     check(testScore == 15)
 
-    val input = readRounds(readInput("day02"))
+    val input = readRounds(readFile("day02"))
     val total = calcTotal(input)
     println("Total = $total")
     // answer for my data. check will be used during refactoring
@@ -107,12 +109,12 @@ fun main() {
 
   fun part2() {
 
-    val testInput2 = readRounds2(readInput("day02_test"))
+    val testInput2 = readRounds2(readText(test))
     val testScore2 = calcTotal(testInput2)
     println("Test Total 2 = $testScore2")
     check(testScore2 == 12)
 
-    val input2 = readRounds2(readInput("day02"))
+    val input2 = readRounds2(readFile("day02"))
     val total2 = calcTotal(input2)
     println("Total 2 = $total2")
     // answer for my data. check will be used during refactoring
