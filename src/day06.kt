@@ -1,19 +1,8 @@
 fun main() {
   fun findUniquePacketEnd(input: String, packetSize: Int): Int {
-    val data = input.toList()
-    val packet = mutableListOf<Char>()
-
-    for (index in data.indices) {
-      packet.add(data[index])
-      if (packet.size > packetSize) {
-        packet.removeAt(0)
-      }
-      if (packet.size == packetSize && packet.toSet().size == packetSize) {
-        println("Packet=$packet")
-        return index + 1
-      }
-    }
-    return input.length
+    return input.toList()
+      .windowed(packetSize)
+      .indexOfFirst { it.toSet().size == packetSize } + packetSize
   }
 
   val input = readFileToString("day06")
