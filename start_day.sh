@@ -1,18 +1,18 @@
 #!/usr/bin/env bash
 DAY=$1
-FILE="day${DAY}.kt"
+FILE="src/day${DAY}.kt"
 
 if [ ! -f $FILE ]; then
-  cp day00.kt $FILE
+  cp src/day00.kt $FILE
   sed -i "s/day00/day${DAY}/g" $FILE
   echo "Created $FILE"
 fi
 ARGS="-d $DAY"
-INPUT="day${DAY}.txt"
+INPUT="src/day${DAY}.txt"
 if [ ! -f $INPUT ]; then
   ARGS="$ARGS -i $INPUT"
 fi
-PUZZLE="puzzle${DAY}.md"
+PUZZLE="src/puzzle${DAY}.md"
 if [ -f $PUZZLE ]; then
   rm -f $PUZZLE
 fi
