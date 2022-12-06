@@ -10,7 +10,7 @@ fun readFile(name: String) = File("src", "$name.txt").readLines()
  * Reads whole file into a text string
  * @param name The name of the file to read
  */
-fun readFileToString(name: String) = String(File("src", "$name.txt").readBytes())
+fun readFileToString(name: String) = File("src", "$name.txt").readText()
 
 /**
  * Read file into lines and group after condition is met place following lines into new list
