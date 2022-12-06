@@ -95,7 +95,7 @@ B X
 C Z"""
   fun part1() {
 
-    val testInput = readRounds(readText(test))
+    val testInput = readRounds(readLines(test))
     val testScore = calcTotal(testInput)
     println("Test Total = $testScore")
     check(testScore == 15)
@@ -109,7 +109,7 @@ C Z"""
 
   fun part2() {
 
-    val testInput2 = readRounds2(readText(test))
+    val testInput2 = readRounds2(readLines(test))
     val testScore2 = calcTotal(testInput2)
     println("Test Total 2 = $testScore2")
     check(testScore2 == 12)

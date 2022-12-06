@@ -39,4 +39,4 @@ fun readFileGroup(name: String, condition: (String) -> Boolean = { it.isBlank() 
  * Parses input text as lines and removes trailing whitespace like \r
  * @param text This is typically text that has been declared between """ or has embedded \n
  */
-fun readText(text: String) = text.split("\n").map { it.trimEnd() }
+fun readLines(text: String) = text.split("\n").map { it.trimEnd() }

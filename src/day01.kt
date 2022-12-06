@@ -38,7 +38,7 @@ fun main() {
 
 10000"""
   fun part1() {
-    val testInput = readText(testText)
+    val testInput = readLines(testText)
     val testMax = findMaxCalories(testInput)
     println("Part 1 - Test Max Calories = $testMax")
     check(testMax == 24000)
@@ -49,7 +49,7 @@ fun main() {
   }
 
   fun part2() {
-    val testInput = readText(testText)
+    val testInput = readLines(testText)
     val testTop3 = topThree(testInput)
     println("Part 2 - Test Top3 = $testTop3")
     check(testTop3 == 45000)

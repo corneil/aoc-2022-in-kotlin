@@ -30,7 +30,7 @@ ttgJtRGJQctTZtZT
 CrZsJsPPZsGzwwsLwLmpwMDw"""
 
   fun part1() {
-    val testPriorities = calcRucksacks(readText(test))
+    val testPriorities = calcRucksacks(readLines(test))
     println("Test Priorities = $testPriorities")
     check(testPriorities == 157)
 
@@ -41,7 +41,7 @@ CrZsJsPPZsGzwwsLwLmpwMDw"""
   }
 
   fun part2() {
-    val testPriorities = calcBadges(readText(test))
+    val testPriorities = calcBadges(readLines(test))
     println("Test Priorities = $testPriorities")
     check(testPriorities == 70)
 

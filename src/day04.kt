@@ -26,7 +26,7 @@ fun main() {
 2-6,4-8"""
 
   fun part1() {
-    val testCount = calcContains(convertRanges(readText(test)))
+    val testCount = calcContains(convertRanges(readLines(test)))
     println("Part 1 Test Count = $testCount")
     check(testCount == 2)
 
@@ -36,7 +36,7 @@ fun main() {
   }
 
   fun part2() {
-    val testCount = calcOverlap(convertRanges(readText(test)))
+    val testCount = calcOverlap(convertRanges(readLines(test)))
     println("Part 2 Test Count = $testCount")
     check(testCount == 4)
 
