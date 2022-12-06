@@ -14,6 +14,7 @@ fun main() {
   fun part2() {
 
   }
+  println("Day - 00")
   part1()
   part2()
 }

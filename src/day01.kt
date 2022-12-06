@@ -58,6 +58,7 @@ fun main() {
     println("Part 2 - Top3 = $top3")
     check(top3 == 209691)
   }
+  println("Day - 01")
   part1()
   part2()
 }

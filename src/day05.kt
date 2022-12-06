@@ -95,7 +95,7 @@ move 2 from 2 to 1
 move 1 from 1 to 2
 """
 
-  val testInputs = test.split("\n\n").map { readLines(it) }
+  val testInputs = readLinesGroup(test)
   val input = readFileGroup("day05")
   fun part1() {
     val testTops = performAndFindTops(loadStacks(testInputs[0]), loadInstructions(testInputs[1]))
@@ -114,7 +114,7 @@ move 1 from 1 to 2
     println("Part 2 Tops = $tops")
     check(tops == "WZMFVGGZP")
   }
-
+  println("Day - 05")
   part1()
   part2()
 

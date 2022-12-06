@@ -40,3 +40,26 @@ fun readFileGroup(name: String, condition: (String) -> Boolean = { it.isBlank() 
  * @param text This is typically text that has been declared between """ or has embedded \n
  */
 fun readLines(text: String) = text.split("\n").map { it.trimEnd() }
+
+/**
+ * Parse text into lines and group after condition is met place following lines into new list
+ * @param text The text to parse
+ * @param condition A lambda to evaluate to determine the grouping condition. The line will be excluded from the output. The default will be a blank line
+ */
+fun readLinesGroup(text: String, condition: (String) -> Boolean = { it.isBlank() }): List<List<String>> {
+  val input = readLines(text)
+  val result = mutableListOf<List<String>>()
+  val list = mutableListOf<String>()
+  input.forEach {
+    if (condition(it)) {
+      result.add(list.toList())
+      list.clear()
+    } else {
+      list.add(it)
+    }
+  }
+  if (list.isNotEmpty()) {
+    result.add(list.toList())
+  }
+  return result.toList()
+}

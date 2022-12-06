@@ -50,7 +50,7 @@ CrZsJsPPZsGzwwsLwLmpwMDw"""
     // added after success to ensure refactoring doesn't break
     check(priorities == 2620)
   }
-
+  println("Day - 03")
   part1()
   part2()
 }

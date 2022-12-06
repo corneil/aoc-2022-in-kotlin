@@ -120,7 +120,7 @@ C Z"""
     // answer for my data. check will be used during refactoring
     check(total2 == 13509)
   }
-
+  println("Day - 02")
   part1()
   part2()
 }

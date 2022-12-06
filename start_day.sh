@@ -4,8 +4,9 @@ FILE="src/day${DAY}.kt"
 
 if [ ! -f $FILE ]; then
   cp src/day00.kt $FILE
-  sed -i "s/day00/day${DAY}/g" $FILE
+  sed -i "s/00/${DAY}/g" $FILE
   echo "Created $FILE"
+  echo "currentDay=$DAY" > gradle.properties
 fi
 ARGS="-d $DAY"
 INPUT="src/day${DAY}.txt"

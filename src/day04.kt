@@ -44,6 +44,7 @@ fun main() {
     println("Part 2 Count = $count")
     check(count == 798)
   }
+  println("Day - 04")
   part1()
   part2()
 }
