@@ -4,6 +4,7 @@ FILE="day${DAY}.kt"
 
 if [ ! -f $FILE ]; then
   cp day00.kt $FILE
+  sed -i "s/day00/day${DAY}/g" $FILE
   echo "Created $FILE"
 fi
 ARGS="-d $DAY"
