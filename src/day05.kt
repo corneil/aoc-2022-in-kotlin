@@ -1,15 +1,4 @@
 data class Instruction(val count: Int, val from: Int, val to: Int)
-class Stack<T>(private val elements: MutableList<T> = mutableListOf<T>()) {
-  fun empty(): Boolean = elements.isEmpty()
-  fun peek(): T = elements[elements.lastIndex]
-  fun pop(): T = elements.removeAt(elements.lastIndex)
-  fun push(value: T) {
-    elements.add(value)
-  }
-
-  fun items() = elements.toList()
-  fun size() = elements.size
-}
 
 fun main() {
 
