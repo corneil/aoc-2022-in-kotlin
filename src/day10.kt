@@ -1,10 +1,19 @@
 package day10
 
-import utils.*
+import utils.readFile
+import utils.readLines
+import utils.separator
 
 sealed class OpCode(val prefix: String) {
-  object NOOP: OpCode("noop")
-  data class ADDX(val value: Int): OpCode("addx")
+  object NOOP : OpCode("noop")
+  abstract class IntOp(val value: Int, p: String) : OpCode(p) {
+    override fun toString() = "$prefix $value"
+  }
+
+  class ADDX(v: Int) : IntOp(v, "addx")
+
+  override fun toString(): String = prefix
+
 }
 
 fun main() {
@@ -39,6 +48,7 @@ fun main() {
         when (ins) {
           is OpCode.NOOP -> tick()
           is OpCode.ADDX -> addX(ins)
+          else -> error("Cannot process $ins")
         }
       }
     }
@@ -116,7 +126,7 @@ fun main() {
     check(testCrt == expectedTestCrt)
     val crt = renderCrt(parseInstructions(input))
     println("Part 2")
-    crt.forEach { println(it.replace('.',' ').replace('#','█')) }
+    crt.forEach { println(it.replace('.', ' ').replace('#', '█')) }
     check(crt == expectedCrt)
   }
   println("Day - 10")
