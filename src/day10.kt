@@ -116,7 +116,7 @@ fun main() {
     check(testCrt == expectedTestCrt)
     val crt = renderCrt(parseInstructions(input))
     println("Part 2")
-    crt.forEach { println(it.replace('.',' ')) }
+    crt.forEach { println(it.replace('.',' ').replace('#','█')) }
     check(crt == expectedCrt)
   }
   println("Day - 10")
