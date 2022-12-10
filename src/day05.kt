@@ -1,3 +1,5 @@
+package day05
+import utils.*
 data class Instruction(val count: Int, val from: Int, val to: Int)
 
 fun main() {

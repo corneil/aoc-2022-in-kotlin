@@ -1,3 +1,5 @@
+package utils
+
 import java.io.File
 import java.util.*
 import java.math.BigInteger
@@ -317,4 +319,24 @@ class Combinations(val m: Int, val n: Int) {
         }
     }
   }
+}
+
+
+class ProcessingState(val registers: List<Char>, val processing: ProcessingState.() -> Unit) {
+  var clock = 0
+    private set
+  private val register = registers.associateWith { 0 }.toMutableMap()
+  fun tick() {
+    clock += 1
+    processing(this)
+  }
+  operator fun get(reg: Char): Int = register[reg]?: error("Invalid register $reg")
+  operator fun set(reg: Char, value: Int) {
+    register[reg] = value
+  }
+  var regX: Int
+    get() = get('X')
+    set(value:Int) {
+      register['X'] = value
+    }
 }

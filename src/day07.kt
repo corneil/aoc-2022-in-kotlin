@@ -1,3 +1,5 @@
+import utils.*
+
 fun main() {
   val test = readFile("day07_test")
   val input = readFile("day07")

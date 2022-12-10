@@ -1,3 +1,6 @@
+package day00
+import utils.*
+
 fun main() {
   fun calcSolution(input: Any): Int = 0
   val test = """"""

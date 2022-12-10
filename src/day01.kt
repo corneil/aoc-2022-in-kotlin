@@ -1,3 +1,6 @@
+
+import utils.*
+
 fun main() {
   fun findCalories(input: List<String>): List<Int> {
     val elves = mutableListOf<Int>()
@@ -37,6 +40,7 @@ fun main() {
 9000
 
 10000"""
+
   fun part1() {
     val testInput = readLines(testText)
     val testMax = findMaxCalories(testInput)

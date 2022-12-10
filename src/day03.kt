@@ -1,3 +1,5 @@
+import utils.*
+
 fun main() {
 
   fun calcPriority(value: Char): Int = when (value) {

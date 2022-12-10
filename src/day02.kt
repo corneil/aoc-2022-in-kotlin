@@ -1,3 +1,6 @@
+package day02
+import utils.*
+
 enum class Rps(val identifiers: String, val shapeScore: Int) {
   ROCK("AX", 1),
   PAPER("BY", 2),
