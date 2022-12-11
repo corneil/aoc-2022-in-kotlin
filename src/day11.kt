@@ -1,7 +1,12 @@
 package day11
 
+import utils.measureAndPrint
 import utils.readFile
 import utils.separator
+import java.math.BigDecimal
+import java.math.MathContext
+import java.math.RoundingMode
+import kotlin.system.measureNanoTime
 
 fun main() {
 
@@ -18,9 +23,11 @@ fun main() {
   ) {
     var inspected: Int = 0
       private set
+
     fun inspect(value: Int = 1) {
       inspected += value
     }
+
     fun findTarget(boredLevel: Long) = if (boredLevel % worriedLevel != 0L) worriedTarget else boredTarget
     override fun toString(): String {
       return "Monkey(number=$number, inspected=$inspected, worriedLevel=$worriedLevel, boredTarget=$boredTarget, worriedTarget=$worriedTarget, items=$items)"
@@ -35,18 +42,22 @@ fun main() {
     "    If true: throw to monkey (\\d+)$",
     "    If false: throw to monkey (\\d+)$"
   ).map { it.toRegex() }
+
   fun parseMonkey(lines: List<String>): Monkey {
-    val result = regexMonkey.mapIndexed { index, regex -> regex.find(lines[index]) ?: error("Regex error for ${lines[index]}") }.toTypedArray()
+    val result =
+      regexMonkey.mapIndexed { index, regex -> regex.find(lines[index]) ?: error("Regex error for ${lines[index]}") }
+        .toTypedArray()
 
     val items = result[1].groupValues[1].split(",")
-                  .map { it.trim().toLong() }
-                  .toMutableList()
+      .map { it.trim().toLong() }
+      .toMutableList()
 
     val words = result[2].groupValues.drop(1)
     check(words[0] == "old")
     val isAdd = words[1] == "+"
     val constant = words[2].toLongOrNull()
-    val lambda: (Long) -> Long = if (isAdd) { old -> old + (constant ?: old) } else { old -> old * (constant ?: old) }
+    val lambda: (Long) -> Long =
+      if (isAdd) { old -> Math.addExact(old, constant ?: old) } else { old -> Math.multiplyExact(old, constant ?: old) }
 
     return Monkey(
       result[0].groupValues[1].toInt(),
@@ -84,7 +95,7 @@ fun main() {
     val monkeys = input.chunked(7).map { parseMonkey(it) }.associateBy { it.number }
     println("Before: ====")
     monkeys.values.forEach { println(it.toString()) }
-    val result = processItems(monkeys, 20, 3)
+    val result = measureAndPrint("Part 1 Time: ") { processItems(monkeys, 20, 3) }
     println("After: ====")
     result.values.forEach { println(it.toString()) }
     return result.values.map { it.inspected }.sortedDescending().take(2).reduce { acc, i -> acc * i }
@@ -94,7 +105,7 @@ fun main() {
     val monkeys = input.chunked(7).map { parseMonkey(it) }.associateBy { it.number }
     println("Before: ====")
     monkeys.values.forEach { println(it.toString()) }
-    val result = processItems(monkeys, 10000, 1)
+    val result = measureAndPrint("Part 2 Time: ") { processItems(monkeys, 10000, 1) }
     println("After: ====")
     result.values.forEach { println(it.toString()) }
     return result.values.map { it.inspected.toLong() }.sortedDescending().take(2).reduce { acc, i -> acc * i }
