@@ -18,7 +18,7 @@ fun main() {
   ) {
     var inspected: Int = 0
       private set
-    fun inspect(value: Int) {
+    fun inspect(value: Int = 1) {
       inspected += value
     }
     fun findTarget(boredLevel: Long) = if (boredLevel % worriedLevel != 0L) worriedTarget else boredTarget
@@ -58,7 +58,7 @@ fun main() {
     )
   }
 
-  fun processItems(monkeys: Map<Int, Monkey>, rounds: Int, divisor: Long = 3L): Map<Int, Monkey> {
+  fun processItems(monkeys: Map<Int, Monkey>, rounds: Int, divisor: Long): Map<Int, Monkey> {
     // The mod of the total of worriedLevels overcomes the Long overflow
     // using all divisors ensure that it is the smallest value that will
     // still satisfy all the requirements when using a large number of rounds
@@ -84,7 +84,7 @@ fun main() {
     val monkeys = input.chunked(7).map { parseMonkey(it) }.associateBy { it.number }
     println("Before: ====")
     monkeys.values.forEach { println(it.toString()) }
-    val result = processItems(monkeys, 20)
+    val result = processItems(monkeys, 20, 3)
     println("After: ====")
     result.values.forEach { println(it.toString()) }
     return result.values.map { it.inspected }.sortedDescending().take(2).reduce { acc, i -> acc * i }
