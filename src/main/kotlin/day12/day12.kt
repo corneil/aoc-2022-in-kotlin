@@ -78,44 +78,33 @@ abdefghi"""
     return edges
   }
 
-  fun calculateSteps(edges: List<Edge<Cell>>, start: Cell, end: Cell): Int {
+  fun calculateSteps(
+    edges: List<Edge<Cell>>,
+    start: Cell,
+    end: Cell
+  ): Int? {
     val graph = Graph(edges, true)
     val path = graph.findPath(start, end)
-    return if (path.isEmpty()) 0 else path.size - 1
+    return if (path.isEmpty()) null else path.size - 1
   }
 
   fun calcSolution1(input: List<String>): Int {
     val edges = createGrid(input)
-    val start = edges.map { edge -> edge.c1 }
-      .find { it.c == 'S' }
-      ?: error("Cannot find S")
     val end = edges.map { edge -> edge.c2 }
-      .find { it.c == 'E' }
-      ?: error("Cannot find E")
-    return calculateSteps(edges, start, end)
+      .find { it.c == 'E' } ?: error("Cannot find E")
+    val start = edges.map { edge -> edge.c1 }
+      .find { it.c == 'S' } ?: error("Cannot find S")
+    return calculateSteps(edges, start, end) ?: error("Cannot find solution from $start to $end")
   }
 
   fun calcSolution2(input: List<String>): Int {
     val edges = createGrid(input)
     val end = edges.map { edge -> edge.c2 }
-      .find { it.c == 'E' }
-      ?: error("Cannot find E")
-    var minSteps = Int.MAX_VALUE
-    edges.map { edge -> edge.c1 }
+      .find { it.c == 'E' } ?: error("Cannot find E")
+    return edges.map { edge -> edge.c1 }
       .filter { it.actual() == 'a' }
-      .forEach { start ->
-        val steps = calculateSteps(edges, start, end)
-        if (steps > 0) {
-          if(steps < minSteps) {
-            print("Minimum=")
-            minSteps = steps
-          } else {
-            print("Tested=")
-          }
-          println("$steps:$start -> $end")
-        }
-      }
-    return minSteps
+      .mapNotNull { start -> calculateSteps(edges, start, end) }
+      .min()
   }
 
   fun part1() {
