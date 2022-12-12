@@ -1,5 +1,5 @@
 package day00
-import utils.*
+import utils.readFileToString
 
 fun main() {
   fun calcSolution(input: Any): Int = 0

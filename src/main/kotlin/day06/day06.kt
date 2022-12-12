@@ -1,4 +1,6 @@
-import utils.*
+package main.day06
+
+import utils.readFileToString
 
 fun main() {
   fun findUniquePacketEnd(input: String, packetSize: Int): Int {

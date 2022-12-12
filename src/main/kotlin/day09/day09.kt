@@ -1,4 +1,8 @@
-import utils.*
+package main.day09
+
+import utils.readFile
+import utils.readLines
+import utils.separator
 
 import kotlin.math.abs
 import kotlin.math.max

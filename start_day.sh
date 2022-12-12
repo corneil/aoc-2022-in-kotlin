@@ -1,15 +1,17 @@
 #!/usr/bin/env bash
 DAY=$1
-FILE="src/day${DAY}.kt"
+FOLDER="src/main/day${DAY}"
+FILE="$FOLDER/day${DAY}.kt"
 
+mkdir -p "$FOLDER"
 if [ ! -f $FILE ]; then
-  cp src/day00.kt $FILE
+  cp src/main/day00/day00.kt $FILE
   sed -i "s/00/${DAY}/g" $FILE
   echo "Created $FILE"
   echo "currentDay=$DAY" > gradle.properties
 fi
 ARGS="-d $DAY"
-INPUT="src/day${DAY}.txt"
+INPUT="src/main/resources/day${DAY}.txt"
 if [ ! -f $INPUT ]; then
   ARGS="$ARGS -i $INPUT"
 fi

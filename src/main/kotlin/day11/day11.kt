@@ -1,12 +1,8 @@
 package day11
 
-import utils.measureAndPrint
+import main.utils.measureAndPrint
 import utils.readFile
 import utils.separator
-import java.math.BigDecimal
-import java.math.MathContext
-import java.math.RoundingMode
-import kotlin.system.measureNanoTime
 
 fun main() {
 

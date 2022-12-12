@@ -1,5 +1,8 @@
 package day05
-import utils.*
+import main.utils.Stack
+import utils.readFileGroup
+import utils.readLinesGroup
+
 data class Instruction(val count: Int, val from: Int, val to: Int)
 
 fun main() {

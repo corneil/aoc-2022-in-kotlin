@@ -1,4 +1,7 @@
-import utils.*
+package main.day03
+
+import utils.readFile
+import utils.readLines
 
 fun main() {
 

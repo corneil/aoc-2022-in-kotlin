@@ -1,5 +1,6 @@
 package day02
-import utils.*
+import utils.readFile
+import utils.readLines
 
 enum class Rps(val identifiers: String, val shapeScore: Int) {
   ROCK("AX", 1),

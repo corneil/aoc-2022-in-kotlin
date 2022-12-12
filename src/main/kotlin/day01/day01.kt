@@ -1,5 +1,6 @@
-
-import utils.*
+package main.day01
+import utils.readFile
+import utils.readLines
 
 fun main() {
   fun findCalories(input: List<String>): List<Int> {

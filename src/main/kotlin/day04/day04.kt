@@ -1,4 +1,8 @@
-import utils.*
+package main.day04
+
+import utils.readFile
+import utils.readLines
+
 fun main() {
   fun convertRange(input: String): IntRange {
     val values = input.split("-")

@@ -1,4 +1,8 @@
-import utils.*
+package main.day07
+
+import main.utils.Stack
+import utils.readFile
+import utils.separator
 
 fun main() {
   val test = readFile("day07_test")
