@@ -89,7 +89,7 @@ abdefghi"""
     val start = edges.map { edge -> edge.c1 }
       .find { it.c == 'S' }
       ?: error("Cannot find S")
-    val end = edges.map { edge -> edge.c1 }
+    val end = edges.map { edge -> edge.c2 }
       .find { it.c == 'E' }
       ?: error("Cannot find E")
     return calculateSteps(edges, start, end)
@@ -97,7 +97,7 @@ abdefghi"""
 
   fun calcSolution2(input: List<String>): Int {
     val edges = createGrid(input)
-    val end = edges.map { edge -> edge.c1 }
+    val end = edges.map { edge -> edge.c2 }
       .find { it.c == 'E' }
       ?: error("Cannot find E")
     var minSteps = Int.MAX_VALUE
