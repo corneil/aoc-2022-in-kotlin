@@ -94,7 +94,8 @@ abdefghi"""
       .find { it.c == 'E' } ?: error("Cannot find E")
     val start = edges.map { edge -> edge.c1 }
       .find { it.c == 'S' } ?: error("Cannot find S")
-    return calculateSteps(edges, start, end) ?: error("Cannot find solution from $start to $end")
+    return calculateSteps(edges, start, end)
+      ?: error("Cannot find solution from $start to $end")
   }
 
   fun calcSolution2(input: List<String>): Int {
