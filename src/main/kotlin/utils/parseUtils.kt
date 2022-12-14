@@ -1,47 +1,33 @@
 package main.utils
 
-fun String.scanInt(): Int {
-  var result = Long.MIN_VALUE
-  var digits = false
-  for(c in this) {
-    if(c.isDigit()) {
-      if(!digits) {
-        digits = true
-        result = (c - '0').toLong()
-      }
-    } else {
-      if(digits) {
-        break;
-      }
-    }
+val singleNumber = """\.*([+|-]*\d+)\D*""".toRegex()
+fun String.scanNumber(): String? {
+  val result = singleNumber.find(this)
+  return result?.let {
+    val (value) = it.destructured
+    value
   }
-  check(result != Long.MIN_VALUE) { "No digits found" }
-  return result.toInt()
 }
 
-fun String.scanInts():List<Int> {
-  val result = mutableListOf<Int>()
-  var digits = false
-  var current = 0
-  var sign = false
-  for(c in this) {
-    if(c.isDigit()) {
-      if(!digits) {
-        digits = true
-        current = c - '0'
-        if(sign) {
-          current *= -1
-        }
-      } else {
-        current *= 10
-        current += c - '0'
-      }
-    } else {
-      if(digits) {
-        result.add(current)
-        current = 0
-      }
+fun String.scanNumbers(): List<String> {
+  val result = mutableListOf<String>()
+  var index = 0
+  do {
+    val match = singleNumber.find(this, index)
+    if (match != null) {
+      val (value) = match.destructured
+      result.add(value)
+      index = match.range.last
     }
-  }
-  return result
+  } while (index < this.lastIndex)
+  return result.toList()
+}
+
+fun String.scanInt(): Int {
+  val value = this.scanNumber()
+  return value?.toInt() ?: error("No digits found")
+}
+
+fun String.scanInts(): List<Int> {
+  return this.scanNumbers().map { it.toInt() }
 }

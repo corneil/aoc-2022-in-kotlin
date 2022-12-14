@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
 DAY=$1
-FOLDER="src/main/day${DAY}"
+FOLDER="src/main/kotlin/day${DAY}"
 FILE="$FOLDER/day${DAY}.kt"
 
 mkdir -p "$FOLDER"
 if [ ! -f $FILE ]; then
-  cp src/main/day00/day00.kt $FILE
+  set -e
+  cp src/main/kotlin/day00/day00.kt $FILE
   sed -i "s/00/${DAY}/g" $FILE
   echo "Created $FILE"
   echo "currentDay=$DAY" > gradle.properties

@@ -7,8 +7,15 @@ repositories {
     mavenCentral()
 }
 
-tasks {
+dependencies {
+    // Other dependencies.
+    testImplementation(kotlin("test"))
+}
 
+tasks {
+    test {
+        useJUnitPlatform()
+    }
     wrapper {
         gradleVersion = "7.6"
     }
@@ -17,7 +24,7 @@ tasks {
 val currentDay: String by project
 
 application {
-    mainClass.set("Day${currentDay}Kt")
+    mainClass.set("day${currentDay}.Day${currentDay}Kt")
 }
 
 defaultTasks("run")
