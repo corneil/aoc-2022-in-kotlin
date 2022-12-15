@@ -12,7 +12,18 @@ data class Coord(val x: Int, val y: Int) : Comparable<Coord> {
   operator fun plus(coord: Coord) = Coord(x + coord.x, y + coord.y)
   fun sign(): Coord = Coord(x.sign, y.sign)
   fun surrounds() = listOf(bottom(), left(), top(), right())
-  fun chebyshevDistance(target: Coord): Int = abs(target.x - x) + abs(target.y - y)
+  fun surroundsDiag() = listOf(
+    bottom(),
+    bottom().left(),
+    left(),
+    left().top(),
+    top(),
+    top().right(),
+    right(),
+    right().bottom()
+  )
+
+  fun chebyshevDistance(target: Coord): Int = abs(x - target.x) + abs(y - target.y)
   override fun compareTo(other: Coord): Int {
     var result = x.compareTo(other.x)
     if (result == 0) {
@@ -24,5 +35,4 @@ data class Coord(val x: Int, val y: Int) : Comparable<Coord> {
   override fun toString(): String {
     return "($x, $y)"
   }
-
 }

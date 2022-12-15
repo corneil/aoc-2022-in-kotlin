@@ -149,13 +149,15 @@ class ProcessingState(val registers: List<Char>, val processing: ProcessingState
     clock += 1
     processing(this)
   }
-  operator fun get(reg: Char): Int = register[reg]?: error("Invalid register $reg")
+
+  operator fun get(reg: Char): Int = register[reg] ?: error("Invalid register $reg")
   operator fun set(reg: Char, value: Int) {
     register[reg] = value
   }
+
   var regX: Int
     get() = get('X')
-    set(value:Int) {
+    set(value: Int) {
       register['X'] = value
     }
 }

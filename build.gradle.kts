@@ -1,14 +1,15 @@
+repositories {
+    mavenCentral()
+}
+
 plugins {
     kotlin("jvm") version "1.7.22"
     application
 }
 
-repositories {
-    mavenCentral()
-}
+
 
 dependencies {
-    // Other dependencies.
     testImplementation(kotlin("test"))
 }
 
