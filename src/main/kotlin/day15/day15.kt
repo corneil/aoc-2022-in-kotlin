@@ -47,14 +47,14 @@ fun main() {
     }
   }
 
-  data class Sensor(val sensor: Coord, val beacon: Coord) {
-    val distance = sensor.chebyshevDistance(beacon)
-    fun isInRange(pos: Coord) = sensor.chebyshevDistance(pos) <= distance
+  data class Sensor(val pos: Coord, val beacon: Coord) {
+    val distance = pos.chebyshevDistance(beacon)
+    fun isInRange(loc: Coord) = this.pos.chebyshevDistance(loc) <= distance
     fun deadSpots(row: Int): IntRange? {
-      val distanceToRow = abs(row - sensor.y)
+      val distanceToRow = abs(row - pos.y)
       return if (distanceToRow <= distance) {
         val diff = distance - distanceToRow
-        (sensor.x - diff)..(sensor.x + diff)
+        (pos.x - diff)..(pos.x + diff)
       } else {
         null
       }
@@ -64,19 +64,19 @@ fun main() {
   fun printGrid(sensors: List<Sensor>) {
     val grid = mutableMapOf<Coord, Char>()
     sensors.forEach { sensor ->
-      grid[sensor.sensor] = 'S'
+      grid[sensor.pos] = 'S'
       grid[sensor.beacon] = 'B'
     }
     for (sensor in sensors) {
-      val start = sensor.sensor.x - sensor.distance
-      val end = sensor.sensor.x + sensor.distance
-      val rows = (sensor.sensor.y - sensor.distance)..(sensor.sensor.y + sensor.distance)
+      val start = sensor.pos.x - sensor.distance
+      val end = sensor.pos.x + sensor.distance
+      val rows = (sensor.pos.y - sensor.distance)..(sensor.pos.y + sensor.distance)
       for (y in rows) {
         for (x in start..end) {
-          val pos = Coord(x, y)
-          if (sensor.isInRange(pos)) {
-            if (!grid.containsKey(pos)) {
-              grid[pos] = '#'
+          val loc = Coord(x, y)
+          if (sensor.isInRange(loc)) {
+            if (!grid.containsKey(loc)) {
+              grid[loc] = '#'
             }
           }
         }
@@ -86,21 +86,10 @@ fun main() {
   }
 
   fun loadSensors(input: List<String>): List<Sensor> {
-    val result = mutableMapOf<Coord, Char>()
-    input.forEach { line ->
-      line.scanInts().chunked(4) { (a,b,c,d) ->
-        result[Coord(a,b)] = 'S'
-        result[Coord(c,d)] = 'B'
+    return input.map { line ->
+      line.scanInts().let { (a,b,c,d) ->
+        Sensor(Coord(a,b), Coord(c,d))
       }
-    }
-    val beacons = result.filter { it.value == 'B' }.map { it.key }
-    return result.filter { it.value == 'S' }
-      .map { it.key }
-      .map { sensor ->
-      val beacon = beacons.map {
-        it to sensor.chebyshevDistance(it)
-      }.minBy { it.second }.first
-      Sensor(sensor, beacon)
     }
   }
 
@@ -111,7 +100,7 @@ fun main() {
       .toSet()
 
     val deadSpots = sensors.filter {
-      it.sensor.y <= row + it.distance && it.sensor.y >= row - it.distance
+      it.pos.y <= row + it.distance && it.pos.y >= row - it.distance
     }.mapNotNull { it.deadSpots(row) }
       .flatMap { r ->
       beacons.flatMap { beacon ->
@@ -125,8 +114,8 @@ fun main() {
   fun calcBeaconFrequency(sensors: List<Sensor>, size: Int): Long {
     val range = 0..size
     val beacons = sensors.map { it.beacon }.toSet()
-    val minRow = sensors.minOfOrNull { min(it.sensor.y, it.beacon.y) - it.distance } ?: 0
-    val maxRow = sensors.maxOfOrNull { max(it.sensor.y, it.beacon.y) + it.distance } ?: size
+    val minRow = sensors.minOfOrNull { min(it.pos.y, it.beacon.y) - it.distance } ?: 0
+    val maxRow = sensors.maxOfOrNull { max(it.pos.y, it.beacon.y) + it.distance } ?: size
     val rows = max(minRow, 0)..min(maxRow, size)
     println("rows = $rows")
     for (row in rows) {
@@ -142,12 +131,12 @@ fun main() {
         val searchRange = (a.last + 1) until b.first
         for (x in searchRange) {
           if (x in range) {
-            val pos = Coord(x, row)
-            val found = !beacons.contains(pos) && sensors.filter {
-              it.sensor.y <= row + it.distance && it.sensor.y >= row - it.distance
-            }.none { it.isInRange(pos) }
+            val loc = Coord(x, row)
+            val found = !beacons.contains(loc) && sensors.filter {
+              it.pos.y <= row + it.distance && it.pos.y >= row - it.distance
+            }.none { it.isInRange(loc) }
             if (found) {
-              return pos.x.toLong() * size.toLong() + pos.y.toLong()
+              return loc.x.toLong() * size.toLong() + loc.y.toLong()
             }
           }
         }
