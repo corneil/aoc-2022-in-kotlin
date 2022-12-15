@@ -1,9 +1,13 @@
 package day11
 
-import main.utils.measureAndPrint
+import main.utils.*
 import utils.readFile
 import utils.separator
 
+
+inline operator fun <T> List<T>.component6(): T {
+  return get(5)
+}
 fun main() {
 
   val test = readFile("day11_test")
@@ -40,36 +44,34 @@ fun main() {
   ).map { it.toRegex() }
 
   fun parseMonkey(lines: List<String>): Monkey {
-    val result =
-      regexMonkey.mapIndexed { index, regex -> regex.find(lines[index]) ?: error("Regex error for ${lines[index]}") }
-        .toTypedArray()
+    return lines.let { (number, itemStr, operation, worried, trueTarget, falseTarget) ->
+      val items = itemStr.scanNumbers().map { it.toLong() }.toMutableList()
 
-    val items = result[1].groupValues[1].split(",")
-      .map { it.trim().toLong() }
-      .toMutableList()
+      val words = operation.substringAfter("new = ").split(" ")
+      check(words[0] == "old") { "Expected old but found ${words}"}
+      val isAdd = words[1] == "+"
+      val constant = words[2].toLongOrNull()
+      val lambda: (Long) -> Long =
+        if (isAdd) { old -> old + (constant ?: old) } else { old -> old * (constant ?: old) }
 
-    val words = result[2].groupValues.drop(1)
-    check(words[0] == "old")
-    val isAdd = words[1] == "+"
-    val constant = words[2].toLongOrNull()
-    val lambda: (Long) -> Long =
-      if (isAdd) { old -> Math.addExact(old, constant ?: old) } else { old -> Math.multiplyExact(old, constant ?: old) }
-
-    return Monkey(
-      result[0].groupValues[1].toInt(),
-      result[3].groupValues[1].toLong(),
-      items,
-      result[4].groupValues[1].toInt(),
-      result[5].groupValues[1].toInt(),
-      lambda
-    )
+      Monkey(
+        number.scanInt(),
+        worried.scanNumber()!!.toLong(),
+        items,
+        trueTarget.scanInt(),
+        falseTarget.scanInt(),
+        lambda
+      )
+    }
   }
 
   fun processItems(monkeys: Map<Int, Monkey>, rounds: Int, divisor: Long): Map<Int, Monkey> {
     // The mod of the total of worriedLevels overcomes the Long overflow
     // using all divisors ensure that it is the smallest value that will
     // still satisfy all the requirements when using a large number of rounds
-    val divisors = monkeys.values.map { monkey -> monkey.worriedLevel }.reduce { acc, l -> acc * l * divisor }
+    val divisors = monkeys.values
+      .map { monkey -> monkey.worriedLevel }
+      .reduce { acc, l -> acc * l * divisor }
     val sorted = monkeys.values.sortedBy { it.number }
     repeat(rounds) {
       sorted.forEach { monkey ->
@@ -88,23 +90,38 @@ fun main() {
   }
 
   fun calcShenanigans1(input: List<String>): Int {
-    val monkeys = input.chunked(7).map { parseMonkey(it) }.associateBy { it.number }
+    val monkeys = input.chunked(7)
+      .map { parseMonkey(it) }
+      .associateBy { it.number }
     println("Before: ====")
     monkeys.values.forEach { println(it.toString()) }
-    val result = measureAndPrint("Part 1 Time: ") { processItems(monkeys, 20, 3) }
+    val result = measureAndPrint("Part 1 Time: ") {
+      processItems(monkeys, 20, 3)
+    }
     println("After: ====")
     result.values.forEach { println(it.toString()) }
-    return result.values.map { it.inspected }.sortedDescending().take(2).reduce { acc, i -> acc * i }
+    return result.values.map { it.inspected }
+      .sortedDescending()
+      .take(2)
+      .reduce { acc, i -> acc * i }
   }
 
   fun calcShenanigans2(input: List<String>): Long {
-    val monkeys = input.chunked(7).map { parseMonkey(it) }.associateBy { it.number }
+    val monkeys = input.chunked(7)
+      .map {
+        parseMonkey(it)
+      }.associateBy { it.number }
     println("Before: ====")
     monkeys.values.forEach { println(it.toString()) }
-    val result = measureAndPrint("Part 2 Time: ") { processItems(monkeys, 10000, 1) }
+    val result = measureAndPrint("Part 2 Time: ") {
+      processItems(monkeys, 10000, 1)
+    }
     println("After: ====")
     result.values.forEach { println(it.toString()) }
-    return result.values.map { it.inspected.toLong() }.sortedDescending().take(2).reduce { acc, i -> acc * i }
+    return result.values.map { it.inspected.toLong() }
+      .sortedDescending()
+      .take(2)
+      .reduce { acc, i -> acc * i }
   }
 
   fun part1() {

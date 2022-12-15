@@ -31,3 +31,17 @@ fun String.scanInt(): Int {
 fun String.scanInts(): List<Int> {
   return this.scanNumbers().map { it.toInt() }
 }
+
+
+fun MatchResult.toInt(): Int {
+  return this.groupValues[1].toInt()
+}
+fun MatchResult.toLong(): Long {
+  return this.groupValues[1].toLong()
+}
+fun MatchResult.toList(): List<String> {
+  return this.groupValues
+}
+fun MatchResult.string(): String {
+  return this.groupValues[1]
+}
