@@ -180,18 +180,16 @@ fun main() {
 
   fun createFilled(lavaCubes: List<Coord3D>): Lava {
     val lava = Lava(lavaCubes)
-    lava.printCube()
     val airPockets = mutableSetOf<Coord3D>()
-    val lockedAir = lava.iterateInside().filter { loc -> !lava.hasCube(loc)
+    airPockets.addAll(lavaCubes)
+    val lockedAir = lava.iterateInside().filter { loc ->
+      !lava.hasCube(loc)
         && loc.surrounds.none { !lava.hasCube(it) && !lava.isInside(it) }
     }
     airPockets.addAll(lockedAir)
-
     println("Air Pockets = ${airPockets.size}")
-    airPockets.addAll(lavaCubes)
     val filled = Lava(airPockets.toList())
     println("Filled has ${filled.cubes.size} blocks")
-    filled.printCube()
     return filled
   }
 
@@ -204,7 +202,7 @@ fun main() {
   fun part1() {
     val testResult = calcSolution1(test)
     println("Part 1 Test Answer = $testResult")
-    check(testResult == 64) { "Expected 10 not $testResult" }
+    checkNumber(testResult, 64)
     val result = calcSolution1(input)
     println("Part 1 Answer = $result")
     checkNumber(result, 4242)
@@ -213,10 +211,10 @@ fun main() {
   fun part2() {
     val testResult = calcSolution2(test)
     println("Part 2 Test Answer = $testResult")
-    check(testResult == 58) { "Expected 58 not $testResult" }
+    checkNumber(testResult, 58)
     val result = calcSolution2(input)
     println("Part 2 Answer = $result")
-    check(result != 2412)
+    checkNumber(result, 2428)
   }
   println("Day - 18")
   part1()
