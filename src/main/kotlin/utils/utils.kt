@@ -163,3 +163,4 @@ class ProcessingState(val registers: List<Char>, val processing: ProcessingState
 }
 
 
+data class Triple<F, S, T>(val first: F, val second: S, val third: T)

@@ -1,6 +1,7 @@
 package main.utils
 
 import java.util.*
+
 data class Edge<T>(val c1: T, val c2: T, val distance: Int = 1)
 
 /**
@@ -51,7 +52,7 @@ class Graph<T : Comparable<T>>(edges: Collection<Edge<T>>, directed: Boolean) {
     }
 
     fun findNeighbours(path: MutableList<Pair<T, Int>>, depth: Int, matcher: (T) -> Boolean): Boolean {
-      return if(depth >= 0) {
+      return if (depth >= 0) {
         val valid = neighbours.filter {
           matcher(it.key.key)
         }.filter {
@@ -65,6 +66,7 @@ class Graph<T : Comparable<T>>(edges: Collection<Edge<T>>, directed: Boolean) {
   }
 
   private val graph = HashMap<T, Vertex<T>>(edges.size)
+
   init {
     for (e in edges) {
       if (!graph.containsKey(e.c1)) {
@@ -148,5 +150,13 @@ class Graph<T : Comparable<T>>(edges: Collection<Edge<T>>, directed: Boolean) {
     val path = mutableListOf<Pair<T, Int>>()
     graph[end]!!.findPath(path)
     return path.toList()
+  }
+
+  fun findNeighbours(end: T, comparator: (left: T, right: T) -> Int): List<T> {
+    val path = mutableListOf<Pair<T, Int>>()
+    graph[end]!!.findNeighbours(path, 1) { true }
+    return path.sortedWith { o1, o2 ->
+      comparator(o1.first, o2.first)
+    }.map { it.first }
   }
 }
