@@ -4,4 +4,5 @@ build
 src/**/*.txt
 src/**/puzzle*.md
 input
-tmp
+tmp/
+workspace/
