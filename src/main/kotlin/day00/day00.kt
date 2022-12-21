@@ -21,7 +21,7 @@ fun main() {
   }
 
   fun part2() {
-//    val testResult = measureAndPrint("Part 2 Test Time: ") { calcSolution(test) }
+//    val testResult = measureAndPrint("Part 2 Test Time: ") { calcSolution(testLines) }
 //    println("Part 2 Test Answer = $testResult")
 //    checkNumber(testResult, 0)
 //    val result = measureAndPrint("Part 2 Time: ") { calcSolution(lines) }
