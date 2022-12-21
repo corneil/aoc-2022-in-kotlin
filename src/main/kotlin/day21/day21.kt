@@ -37,7 +37,7 @@ data class OperationMonkey(
 ) : BaseMonkey
 
 object Day21 {
-
+  // create a lif od rational functions for the polynomial solver.
   context(ListRationalFunctionSpace<C, Ring<C>>)
   fun <C> BaseMonkey.eval(
     monkeys: Map<String, BaseMonkey>,
@@ -58,7 +58,6 @@ object Day21 {
         }
       }
     }
-
 }
 
 fun main() {
@@ -82,12 +81,9 @@ hmdt: 32"""
   )
   val lines = readFile("day21")
 
-  class Monkey(val name: String, val expression: String) {
-    var shout: (() -> Long)? = null
-    open fun answer(): Long {
-      val result = shout?.invoke() ?: error("Monkey $name cannot shout with $expression")
-      // println("Monkey $name shouts $result from $expression")
-      return result
+  class Monkey(val name: String, val expression: String, var shout: (() -> Long)? = null) {
+    fun answer(): Long {
+      return shout?.invoke() ?: error("Monkey $name cannot shout with $expression")
     }
   }
 
